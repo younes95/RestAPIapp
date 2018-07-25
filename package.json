@@ -21,7 +21,8 @@
     "websocket": "^1.0.23"
   },
   "devDependencies": {},
-  "scripts": {},
+  "scripts": {"start": "node node2.js"},
+  "main": "node2.js",
   "author": "jollen",
   "engines": {
     "node": "4.4"
