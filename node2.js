@@ -15,8 +15,8 @@ var sqlConfigAWS = {
   user: 'admininstance',
   password: 'None#4712',
   database : 'API_TestDB',
-  server: 'dbinstance.czuww2abjk2v.us-east-1.rds.amazonaws.com', 
- // port : 3306,   // don't add tcp & port number
+  server: 'dbtestinstance.czuww2abjk2v.us-east-1.rds.amazonaws.com', 
+  //port : 3306,   // don't add tcp & port number
   options: {
     encrypt: true
   }
@@ -40,7 +40,7 @@ var sqlConfigAWS = {
 
 var onstart = function(node) {
 
-   /*  new sql.ConnectionPool(sqlConfigAWS).connect().then(pool => {
+ /*  new sql.ConnectionPool(sqlConfigAWS).connect().then(pool => {
                   return pool.request().query("select * from Persons")
                   }).then(result => {
                     console.log('Connected');
@@ -53,8 +53,8 @@ var onstart = function(node) {
                     //console.log(err)
                    // res.status(500).send({ message: "${err}"})
                     sql.close();
-                  });*/
-
+                  });
+*/
 
     receiveNewNode(9000);
 }
@@ -139,7 +139,7 @@ function receiveNewNode(port){
                 response='SUCCESS';
 
                 new sql.ConnectionPool(sqlConfigAWS).connect().then(pool => {
-                  return pool.request().query("select * from Persons where PersonID = "+req.body.param)
+                  return pool.request().query("select * from Persons where PersonID = '" + req.body.param + "'")
                   }).then(result => {
                     let rows = result.recordset
                     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -193,7 +193,8 @@ function receiveNewNode(port){
                 response='SUCCESS';
 
                 new sql.ConnectionPool(sqlConfigAZURE).connect().then(pool => {
-                  return pool.request().query("select * from Persons where LastName = "+''+req.body.param+'')
+                  sqlQuery='select * from Persons WHERE LastName = \''+req.body.param+'\'';
+                  return pool.request().query(sqlQuery)
                   }).then(result => {
                     let rows = result.recordset
                     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -221,6 +222,7 @@ function receiveNewNode(port){
                 response='SUCCESS';
 
                 new sql.ConnectionPool(sqlConfigAZURE).connect().then(pool => {
+                  sqlQuery="select * from Persons where PersonID = "+req.body.param;
                   return pool.request().query("select * from Persons where PersonID = "+req.body.param)
                   }).then(result => {
                     let rows = result.recordset
@@ -228,6 +230,7 @@ function receiveNewNode(port){
                     res.status(200).json(rows);
                     sql.close();
                   }).catch(err => {
+                    throw err;
                     res.status(500).send({ message: "${err}"})
                     sql.close();
                   });

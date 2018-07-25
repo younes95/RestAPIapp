@@ -4,8 +4,8 @@ var config =
 {   
     user: 'admininstance',
     password: 'None#4712',
-    database : 'apitestdb',
-    host: 'dbinstance.czuww2abjk2v.us-east-1.rds.amazonaws.com', 
+    database : 'YOUNES18young',
+    host: 'dbtestinstance.czuww2abjk2v.us-east-1.rds.amazonaws.com', 
     port : '3306',   // don't add tcp & port number
  
     
